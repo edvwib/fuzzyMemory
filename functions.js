@@ -71,9 +71,10 @@ function setCardEventListener(){
   cards.forEach(card => {
     card.addEventListener('click', (ev) => {
       ++openCards;
-      ev.target.style.zIndex = '10';
+      ev.target.parentNode.style.zIndex = '10';
       if (openCards > 2) {
         cards.forEach(card => {
+          card.style.zIndex = '1';
           card.classList.remove('flipped');
           card.querySelector('span').classList.add('hidden');
           openCards = 1;
@@ -88,8 +89,7 @@ function setCardEventListener(){
         if (activeCards[0].dataset.id === activeCards[1].dataset.id) {
           setTimeout(() => {
             activeCards.forEach(c => {
-              c.parentNode.style.visibility = 'hidden';
-              c.parentNode.style.zIndex = '0';
+              c.parentNode.remove();
               c.style.opacity = 0;
             });
           }, 1000);

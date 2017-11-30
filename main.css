@@ -43,6 +43,8 @@ body{height: 100vh;}
   height: var(--card-height);
   width: var(--card-width);
   z-index: 0;
+  transform: rotateY(180deg);
+  
 
   display: flex;
   align-items: center;
@@ -63,13 +65,13 @@ body{height: 100vh;}
   height: 100%;
   width: 70%;
   background-size: contain;
-  background-position: center;
+  background-position: center; 
 }
 .card span.hidden{
   opacity: 1;
   transition: all .75s;
 }
 .card.flipped{
-  transform: rotateY(-180deg);
+  transform: rotateY(0deg);
   background-image: url(card-back.svg);
 }
