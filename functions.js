@@ -36,26 +36,30 @@ function createCard(id){
   cards.push(card);
   board.appendChild(card);
 
-  card.style.left = getRandomInt(0, board.offsetWidth-200) + 'px';
-  card.style.top = getRandomInt(0, board.offsetHeight-200) + 'px';
+  card.style.left = getRandomInt(0, board.offsetWidth - 150) + 'px';
+  card.style.top = getRandomInt(0, board.offsetHeight - 200) + 'px';
 
-  let onTop = false;
-  cards.forEach(oldCard => {
-    do {
-      if (intersects(card.getBoundingClientRect(), oldCard.getBoundingClientRect())) {
-        onTop = true;
-      } else {
-        onTop = false;
-        break;
-      }
-    } while (onTop);
-  });
-}
+  let c = card.getBoundingClientRect();
 
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+  for (let i = 0; i < cards.length; i++) {
+    if (i === id) {
+      /* console.log(cards[i].getBoundingClientRect());
+      console.log(c); */
+      console.log(`skipping comparison of ${i} with ${id}`);
+
+      return;
+    }else{
+
+      console.log(`comparing ${i} with ${id}`);
+
+      return;
+      do {
+        card.style.left = getRandomInt(0, board.offsetWidth - 150) + 'px';
+        card.style.top = getRandomInt(0, board.offsetHeight - 200) + 'px';
+        c = card.getBoundingClientRect();
+      } while (/* intersects(c, cards[i].getBoundingClientRect()) */false);
+    }
+  }
 }
 
 function intersects(r1, r2) {
@@ -63,6 +67,12 @@ function intersects(r1, r2) {
     r2.right < r1.left ||
     r2.top > r1.bottom ||
     r2.bottom < r1.top);
+}
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 }
 
 function setCardEventListener(){
@@ -81,7 +91,6 @@ function setCardEventListener(){
 
       if (openCards === 2) {
         let activeCards = document.querySelectorAll('.card span:not(.hidden)');
-        console.log(activeCards);
         if (activeCards[0].innerText === activeCards[1].innerText) {
           setTimeout(() => {
             activeCards.forEach(c => {
