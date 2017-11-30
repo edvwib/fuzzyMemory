@@ -1,0 +1,43 @@
+:root{
+  --controls-background: #438957;
+  --board-background: #196d31;
+
+  --card-height: 30vh;
+  --card-width: 20vh;
+}
+body{height: 100vh;}
+.container{
+  height: 95vh;
+  width: 100vw;
+}
+
+/* Controls */
+.controls{
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  height: 5vh;
+
+  font-family: 'Roboto', Arial, sans-serif;
+  background-color: var(--controls-background);
+  color: white;
+}
+
+/* Board */
+.board{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: var(--board-background);
+}
+.card{
+  position: absolute;
+  height: var(--card-height);
+  width: var(--card-width);
+
+  background-image: url(card.svg);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
