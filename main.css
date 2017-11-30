@@ -2,8 +2,8 @@
   --controls-background: #438957;
   --board-background: #196d31;
 
-  --card-height: 30vh;
-  --card-width: 20vh;
+  --card-height: 150px;
+  --card-width: 100px;
 }
 body{height: 100vh;}
 .container{
@@ -37,13 +37,25 @@ body{height: 100vh;}
   height: var(--card-height);
   width: var(--card-width);
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   background-image: url(card-front.svg);
   background-size: 100% 100%;
   background-repeat: no-repeat;
 
+  font-family: 'Roboto', Arial, sans-serif;
+  font-size: 50px;
+
   transition: all 1s;
 }
 
+.card span{transition: all 3s;}
+.card span.hidden{
+  opacity: 0;
+  transition: all .75s;
+}
 .card.flipped{
   transform: rotateY(-180deg);
   background-image: url(card-back.svg);

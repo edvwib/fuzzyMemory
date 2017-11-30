@@ -10,13 +10,22 @@ const container = document.querySelector('.container');
 const board = document.querySelector('.board');
 var cards = [];
 var cardsImage = [0,0,1,1,2,2,3,3];
+var openCards = 0;
 
 for(let i = 0; i < 8; i++){
   createCard(i);
 }
 
-cards.forEach(card => {
-  card.addEventListener('click', (ev) => {
-    card.classList.toggle('flipped');
+setCardEventListener();
+
+document.querySelector('.reset-board').addEventListener('click', (ev) => {
+  cards = [];
+  document.querySelectorAll('.card').forEach(card => {
+    card.remove();
   });
+  for (let i = 0; i < 8; i++) {
+    createCard(i);
+  }
+  setCardEventListener();
+  time = -1;
 });
