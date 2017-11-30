@@ -1,5 +1,7 @@
 'use strict';
 
+let attempts = 0;
+const attemptsSpan = document.querySelector('.attempts');
 let time = 0;
 const timeEl = document.querySelector('.timer');
 const timeM = document.querySelector('.timer .minutes');

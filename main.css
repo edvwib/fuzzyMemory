@@ -60,7 +60,7 @@ body{height: 100vh;}
 .card span{
   transition: all 3s;
   height: 100%;
-  width: 80%;
+  width: 70%;
   background-size: contain;
   background-position: center;
 }

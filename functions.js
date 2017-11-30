@@ -67,6 +67,7 @@ function setCardEventListener(){
       card.querySelector('span').classList.toggle('hidden');
 
       if (openCards === 2) {
+        attemptsSpan.innerText = `Attempts: ${++attempts}`; //Update attempts counter        
         let activeCards = document.querySelectorAll('.card span:not(.hidden)');
         if (activeCards[0].dataset.id === activeCards[1].dataset.id) {
           setTimeout(() => {
