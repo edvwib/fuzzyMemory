@@ -37,7 +37,14 @@ body{height: 100vh;}
   height: var(--card-height);
   width: var(--card-width);
 
-  background-image: url(card.svg);
+  background-image: url(card-front.svg);
   background-size: 100% 100%;
   background-repeat: no-repeat;
+
+  transition: all 1s;
+}
+
+.card.flipped{
+  transform: rotateY(-180deg);
+  background-image: url(card-back.svg);
 }

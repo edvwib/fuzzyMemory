@@ -14,3 +14,9 @@ var cardsImage = [0,0,1,1,2,2,3,3];
 for(let i = 0; i < 8; i++){
   createCard(i);
 }
+
+cards.forEach(card => {
+  card.addEventListener('click', (ev) => {
+    card.classList.toggle('flipped');
+  });
+});
