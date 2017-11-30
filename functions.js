@@ -29,49 +29,26 @@ function updateTime() {
 
 function createCard(id){
   let card = document.createElement("div");
-  card.classList.add('class', 'card');
+  card.classList.add('class', 'card');  
 
-  card.innerHTML = `<span class="hidden">${cardsImage[id]}</span>`;
-
+  card.innerHTML = `<span class="hidden" data-id="${cardsImage[id]}"></span>`;
+  card.childNodes[0].style.backgroundImage = `url('./img/${cardsImage[id]}.png')`;
+  
   cards.push(card);
   board.appendChild(card);
 
   card.style.left = getRandomInt(0, board.offsetWidth - 150) + 'px';
   card.style.top = getRandomInt(0, board.offsetHeight - 200) + 'px';
-
-  let c = card.getBoundingClientRect();
-
-  for (let i = 0; i < cards.length; i++) {
-    if (i === id) {
-      /* console.log(cards[i].getBoundingClientRect());
-      console.log(c); */
-      console.log(`skipping comparison of ${i} with ${id}`);
-
-      return;
-    }else{
-
-      console.log(`comparing ${i} with ${id}`);
-
-      return;
-      do {
-        card.style.left = getRandomInt(0, board.offsetWidth - 150) + 'px';
-        card.style.top = getRandomInt(0, board.offsetHeight - 200) + 'px';
-        c = card.getBoundingClientRect();
-      } while (/* intersects(c, cards[i].getBoundingClientRect()) */false);
-    }
-  }
 }
 
-function intersects(r1, r2) {
-  return !(r2.left > r1.right ||
-    r2.right < r1.left ||
-    r2.top > r1.bottom ||
-    r2.bottom < r1.top);
+function intersects(c1, c2) {
+  return !(c2.left > c1.right ||
+    c2.right < c1.left ||
+    c2.top > c1.bottom ||
+    c2.bottom < c1.top);
 }
 
 function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 }
 
@@ -91,7 +68,7 @@ function setCardEventListener(){
 
       if (openCards === 2) {
         let activeCards = document.querySelectorAll('.card span:not(.hidden)');
-        if (activeCards[0].innerText === activeCards[1].innerText) {
+        if (activeCards[0].dataset.id === activeCards[1].dataset.id) {
           setTimeout(() => {
             activeCards.forEach(c => {
               c.parentNode.style.visibility = 'hidden';

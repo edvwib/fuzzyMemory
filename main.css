@@ -2,7 +2,7 @@
   --controls-background: #438957;
   --board-background: #196d31;
 
-  --card-height: 200px;
+  --card-height: 150px;
   --card-width: 100px;
 }
 body{height: 100vh;}
@@ -28,6 +28,12 @@ body{height: 100vh;}
 /* Board */
 .board{
   position: relative;
+
+  /*display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: center;*/
+
   width: 100%;
   height: 100%;
   background-color: var(--board-background);
@@ -51,9 +57,15 @@ body{height: 100vh;}
   transition: all 1s;
 }
 
-.card span{transition: all 3s;}
+.card span{
+  transition: all 3s;
+  height: 100%;
+  width: 80%;
+  background-size: contain;
+  background-position: center;
+}
 .card span.hidden{
-  opacity: 0;
+  opacity: 1;
   transition: all .75s;
 }
 .card.flipped{
