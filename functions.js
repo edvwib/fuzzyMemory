@@ -34,11 +34,26 @@ function createCard(id){
   card.innerHTML = `<span class="hidden" data-id="${cardsImage[id]}"></span>`;
   card.childNodes[0].style.backgroundImage = `url('./img/${cardsImage[id]}.png')`;
   
-  cards.push(card);
   board.appendChild(card);
-
+  
   card.style.left = getRandomInt(0, board.offsetWidth - 150) + 'px';
   card.style.top = getRandomInt(0, board.offsetHeight - 200) + 'px';
+  
+  
+  let newRect = card.getBoundingClientRect();
+  cards.forEach(oldCard => {
+    let oldRect = oldCard.getBoundingClientRect();
+    setInterval(() => {
+      if(intersects(newRect, oldRect)){
+        card.style.left = getRandomInt(0, board.offsetWidth-200) + 'px';
+        card.style.top = getRandomInt(0, board.offsetHeight-200) + 'px';
+        console.log('intersecting');
+        newRect = card.getBoundingClientRect();
+      }
+    },1000);
+    
+  });
+  cards.push(card);
 }
 
 function intersects(c1, c2) {
@@ -56,6 +71,7 @@ function setCardEventListener(){
   cards.forEach(card => {
     card.addEventListener('click', (ev) => {
       ++openCards;
+      ev.target.style.zIndex = '10';
       if (openCards > 2) {
         cards.forEach(card => {
           card.classList.remove('flipped');
@@ -73,6 +89,7 @@ function setCardEventListener(){
           setTimeout(() => {
             activeCards.forEach(c => {
               c.parentNode.style.visibility = 'hidden';
+              c.parentNode.style.zIndex = '0';
               c.style.opacity = 0;
             });
           }, 1000);
