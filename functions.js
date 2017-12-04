@@ -59,7 +59,6 @@ function createCards(){
     card.style.left = getRandomInt(0, board.offsetWidth - 150) + 'px';
     card.style.top = getRandomInt(0, board.offsetHeight - 200) + 'px';
 
-
     let newRect = card.getBoundingClientRect();
     cards.forEach(oldCard => {
       let oldRect = oldCard.getBoundingClientRect();
@@ -71,12 +70,17 @@ function createCards(){
           newRect = card.getBoundingClientRect();
         }
       },1000);
-
     });
     cards.push(card);
   }
 }
 
+/**
+ * Checks if two objects are intersecting by comparing their axis.
+ * @param  {[object]} c1 Card 1
+ * @param  {[object]} c2 Card 2
+ * @return {[boolean]}
+ */
 function intersects(c1, c2) {
   return !(c2.left > c1.right ||
     c2.right < c1.left ||
@@ -84,6 +88,12 @@ function intersects(c1, c2) {
     c2.bottom < c1.top);
 }
 
+/**
+ * Returns random int between min-max.
+ * @param  {[int]} min
+ * @param  {[int]} max
+ * @return {[int]}
+ */
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 }
