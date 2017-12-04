@@ -1,7 +1,15 @@
 'use strict';
 
 function reset(){
-
+  cards = [];
+  document.querySelectorAll('.card').forEach(card => {
+    card.remove();
+  });
+  for (let i = 0; i < cardsImage.length; i++) {
+    createCard(i);
+  }
+  setCardEventListener();
+  time = -1;
 }
 
 function updateTime() {
@@ -29,17 +37,17 @@ function updateTime() {
 
 function createCard(id){
   let card = document.createElement("div");
-  card.classList.add('class', 'card');  
+  card.classList.add('class', 'card');
 
   card.innerHTML = `<span class="hidden" data-id="${cardsImage[id]}"></span>`;
   card.childNodes[0].style.backgroundImage = `url('./img/${cardsImage[id]}.png')`;
-  
+
   board.appendChild(card);
-  
+
   card.style.left = getRandomInt(0, board.offsetWidth - 150) + 'px';
   card.style.top = getRandomInt(0, board.offsetHeight - 200) + 'px';
-  
-  
+
+
   let newRect = card.getBoundingClientRect();
   cards.forEach(oldCard => {
     let oldRect = oldCard.getBoundingClientRect();
@@ -51,7 +59,7 @@ function createCard(id){
         newRect = card.getBoundingClientRect();
       }
     },1000);
-    
+
   });
   cards.push(card);
 }
@@ -84,7 +92,7 @@ function setCardEventListener(){
       card.querySelector('span').classList.toggle('hidden');
 
       if (openCards === 2) {
-        attemptsSpan.innerText = `Attempts: ${++attempts}`; //Update attempts counter        
+        attemptsSpan.innerText = `Attempts: ${++attempts}`; //Update attempts counter
         let activeCards = document.querySelectorAll('.card span:not(.hidden)');
         if (activeCards[0].dataset.id === activeCards[1].dataset.id) {
           setTimeout(() => {

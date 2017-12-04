@@ -21,20 +21,6 @@ for(let i = 0; i < cardsImage.length; i++){
 
 setCardEventListener();
 
-document.querySelector('.reset-board').addEventListener('click', (ev) => {
-  cards = [];
-  document.querySelectorAll('.card').forEach(card => {
-    card.remove();
-  });
-  for (let i = 0; i < cardsImage.length; i++) {
-    createCard(i);
-  }
-  setCardEventListener();
-  time = -1;
+document.querySelector('.reset').addEventListener('click', (ev) => {
+  reset();
 });
-
-
-
-
-
-
