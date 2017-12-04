@@ -1,17 +1,27 @@
 'use strict';
 
+/**
+ * Resets the cards on the board, along with statistics.
+ */
 function reset(){
-  cards = [];
+  cards = []; // Empty the array keeping track of cards
   document.querySelectorAll('.card').forEach(card => {
-    card.remove();
+    card.remove(); // Remove all existing cards
   });
-  for (let i = 0; i < cardsImage.length; i++) {
+  for (let i = 0; i < cardsImage.length; i++) { // Create new cards.
     createCard(i);
   }
-  setCardEventListener();
-  time = -1;
+
+  setCardEventListener(); /* Adding new EventListeners, since the elements have
+                             been replaced  */
+  time = -1; // Reset the time, -1 so it dispalys 00:00
+  attempts = 0;
 }
 
+/**
+ * Runs on an interval every second, and updates the element in
+ * the HTML to dispaly a clock. Not very accurate, but it works for now.
+ */
 function updateTime() {
   ++time;
 
@@ -22,19 +32,23 @@ function updateTime() {
     m -= 1;
   }
 
-  if(m.toString().length < 2){/* Add padding to display if int is 1 number */
+  if(m.toString().length < 2){// Add padding to display if int is 1 number
     timeM.innerHTML = `0${m}`;
   }else{
     timeM.innerHTML = m;
   }
-  if(s.toString().length < 2){
+  if(s.toString().length < 2){// Add padding to display if int is 1 number
     timeS.innerHTML = `0${s}`;
   }else{
     timeS.innerHTML = s;
   }
 }
 
-
+/**
+ * Creates a card and adds it to the array of cards, to easily loop through
+ * them later on. Also positions them reandomly on the board and tries not to
+ * place them on top of one another.
+ */
 function createCard(id){
   let card = document.createElement("div");
   card.classList.add('class', 'card');
@@ -92,7 +106,7 @@ function setCardEventListener(){
       card.querySelector('span').classList.toggle('hidden');
 
       if (openCards === 2) {
-        attemptsSpan.innerText = `Attempts: ${++attempts}`; //Update attempts counter
+        attemptsEl.innerText = `Attempts: ${++attempts}`; //Update attempts counter
         let activeCards = document.querySelectorAll('.card span:not(.hidden)');
         if (activeCards[0].dataset.id === activeCards[1].dataset.id) {
           setTimeout(() => {
