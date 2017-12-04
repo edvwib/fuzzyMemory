@@ -4,14 +4,11 @@
  * Resets the cards on the board, along with statistics.
  */
 function reset(){
-  cards = []; // Empty the array keeping track of cards
+  cards = []; // Otherwise it will cause a loop when creating new cards
   document.querySelectorAll('.card').forEach(card => {
-    card.remove(); // Remove all existing cards
+    card.remove();
   });
-  for (let i = 0; i < cardsImage.length; i++) { // Create new cards.
-    createCard(i);
-  }
-
+  createCards();
   setCardEventListener(); /* Adding new EventListeners, since the elements have
                              been replaced  */
   time = -1; // Reset the time, -1 so it dispalys 00:00
@@ -49,33 +46,35 @@ function updateTime() {
  * them later on. Also positions them reandomly on the board and tries not to
  * place them on top of one another.
  */
-function createCard(id){
-  let card = document.createElement("div");
-  card.classList.add('class', 'card');
+function createCards(){
+  for(let i = 0; i < cardsImage.length; i++){
+    let card = document.createElement("div");
+    card.classList.add('class', 'card');
 
-  card.innerHTML = `<span class="hidden" data-id="${cardsImage[id]}"></span>`;
-  card.childNodes[0].style.backgroundImage = `url('./img/${cardsImage[id]}.png')`;
+    card.innerHTML = `<span class="hidden" data-id="${cardsImage[i]}"></span>`;
+    card.childNodes[0].style.backgroundImage = `url('./img/${cardsImage[i]}.png')`;
 
-  board.appendChild(card);
+    board.appendChild(card);
 
-  card.style.left = getRandomInt(0, board.offsetWidth - 150) + 'px';
-  card.style.top = getRandomInt(0, board.offsetHeight - 200) + 'px';
+    card.style.left = getRandomInt(0, board.offsetWidth - 150) + 'px';
+    card.style.top = getRandomInt(0, board.offsetHeight - 200) + 'px';
 
 
-  let newRect = card.getBoundingClientRect();
-  cards.forEach(oldCard => {
-    let oldRect = oldCard.getBoundingClientRect();
-    setInterval(() => {
-      if(intersects(newRect, oldRect)){
-        card.style.left = getRandomInt(0, board.offsetWidth-200) + 'px';
-        card.style.top = getRandomInt(0, board.offsetHeight-200) + 'px';
-        console.log('intersecting');
-        newRect = card.getBoundingClientRect();
-      }
-    },1000);
+    let newRect = card.getBoundingClientRect();
+    cards.forEach(oldCard => {
+      let oldRect = oldCard.getBoundingClientRect();
+      setInterval(() => {
+        if(intersects(newRect, oldRect)){
+          card.style.left = getRandomInt(0, board.offsetWidth-200) + 'px';
+          card.style.top = getRandomInt(0, board.offsetHeight-200) + 'px';
+          console.log('intersecting');
+          newRect = card.getBoundingClientRect();
+        }
+      },1000);
 
-  });
-  cards.push(card);
+    });
+    cards.push(card);
+  }
 }
 
 function intersects(c1, c2) {
