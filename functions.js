@@ -103,7 +103,7 @@ function checkCards(ev, card){
         openCards = 0;
       }, 1500);
     }
-
+displayEnd();
     //Check if there are no cards left on the board
     setTimeout(() => {
       let count = document.querySelectorAll('.card');
@@ -119,7 +119,7 @@ function checkCards(ev, card){
 function displayEnd(){
   let popup = document.querySelector('.popup');
   let overlay = document.querySelector('.overlay');
-  popup.style.display = 'block';
-  overlay.style.display = 'block';
+  popup.style.visibility = 'visible';
+  overlay.style.visibility = 'visible';
 
 }

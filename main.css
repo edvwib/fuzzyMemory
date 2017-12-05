@@ -38,7 +38,7 @@ body{height: 100vh;}
 }
 .popup{
   z-index: 100;
-  display: none;
+  visibility: hidden;
   background-color: darkred;
   color: white;
   border: 5px solid white;
@@ -55,7 +55,7 @@ body{height: 100vh;}
 }
 .overlay{
   z-index: 50;
-  display: none;
+  visibility: hidden;
   position: absolute;
   height: 100%;
   width: 100%;
