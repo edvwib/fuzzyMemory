@@ -4,13 +4,18 @@
  * Resets the cards on the board, along with statistics.
  */
 function reset(){
+  popup.style.visibility = 'hidden';
+  overlay.style.visibility = 'hidden';
   cards = []; // Otherwise it will cause a loop when creating new cards
   document.querySelectorAll('.card').forEach(card => {
     card.remove();
   });
   createCards();
-  setCardEventListener(); /* Adding new EventListeners, since the elements have
-                             been replaced  */
+  cards.forEach(card => {/* Adding new EventListeners, since the elements have been replaced  */
+    card.addEventListener('click', (ev) => {
+      checkCards(ev, card);
+    });
+  });
   time = -1; // Reset the time, -1 so it dispalys 00:00
   attempts = 0;
 }
@@ -103,7 +108,7 @@ function checkCards(ev, card){
         openCards = 0;
       }, 1500);
     }
-displayEnd();
+
     //Check if there are no cards left on the board
     setTimeout(() => {
       let count = document.querySelectorAll('.card');
@@ -117,9 +122,15 @@ displayEnd();
 
 
 function displayEnd(){
-  let popup = document.querySelector('.popup');
-  let overlay = document.querySelector('.overlay');
+  popup = document.querySelector('.popup');
+  popupText = popup.querySelector('p');
+  overlay = document.querySelector('.overlay');
+  if (timeM.textContent === '00') {
+    popupText.innerHTML = `You won!<br>And it only took you ${timeS.textContent} seconds, with a total of ${attempts} attempts!`;
+  }else {
+    popupText.innerHTML = `You won!<br>And it only took you ${timeM.textContent} minutes and ${timeS.textContent} seconds, with a total of ${attempts} attempts!`;
+  }
+
   popup.style.visibility = 'visible';
   overlay.style.visibility = 'visible';
-
 }
