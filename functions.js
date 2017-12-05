@@ -47,7 +47,7 @@ function updateTime() {
  * place them on top of one another.
  */
 function createCards(){
-  for(let i = 0; i < cardsImage.length; i++){
+  for(let i = 0; i < cardsImage.length; i++) {
     let card = document.createElement("div");
     card.classList.add('class', 'card');
 
@@ -56,36 +56,14 @@ function createCards(){
 
     board.appendChild(card);
 
-    card.style.left = getRandomInt(0, board.offsetWidth - 150) + 'px';
-    card.style.top = getRandomInt(0, board.offsetHeight - 200) + 'px';
-
-    let newRect = card.getBoundingClientRect();
-    cards.forEach(oldCard => {
-      let oldRect = oldCard.getBoundingClientRect();
-      setInterval(() => {
-        if(intersects(newRect, oldRect)){
-          card.style.left = getRandomInt(0, board.offsetWidth-200) + 'px';
-          card.style.top = getRandomInt(0, board.offsetHeight-200) + 'px';
-          console.log('intersecting');
-          newRect = card.getBoundingClientRect();
-        }
-      },1000);
-    });
+    for (let i = 0; i < 250; i++) {
+      setTimeout(() => {
+        card.style.left = getRandomInt(0, board.offsetWidth-200) + 'px';
+        card.style.top = getRandomInt(0, board.offsetHeight-200) + 'px';
+      },500);
+    }
     cards.push(card);
   }
-}
-
-/**
- * Checks if two objects are intersecting by comparing their axis.
- * @param  {[object]} c1 Card 1
- * @param  {[object]} c2 Card 2
- * @return {[boolean]}
- */
-function intersects(c1, c2) {
-  return !(c2.left > c1.right ||
-    c2.right < c1.left ||
-    c2.top > c1.bottom ||
-    c2.bottom < c1.top);
 }
 
 /**
@@ -98,34 +76,50 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 }
 
-function setCardEventListener(){
-  cards.forEach(card => {
-    card.addEventListener('click', (ev) => {
-      ++openCards;
-      ev.target.parentNode.style.zIndex = '10';
-      if (openCards > 2) {
-        cards.forEach(card => {
-          card.style.zIndex = '1';
-          card.classList.remove('flipped');
-          card.querySelector('span').classList.add('hidden');
-          openCards = 1;
-        });
-      }
-      card.classList.toggle('flipped');
-      card.querySelector('span').classList.toggle('hidden');
+function checkCards(ev, card){
+  openCards++;
+  card.classList.toggle('flipped');
+  card.querySelector('span').classList.toggle('hidden');
+  if (openCards === 1) {
+    card.style.zIndex = '10';
+  }
+  if (openCards === 2) {
+    attemptsEl.innerText = `Attempts: ${++attempts}`; //Update attempts counter
+    let activeCards = document.querySelectorAll('.card span:not(.hidden)');
+    if (activeCards[0].dataset.id === activeCards[1].dataset.id) {
+      setTimeout(() => {
+        activeCards[0].parentNode.remove();
+        activeCards[1].parentNode.remove();
+        activeCards = null;
+        openCards = 0;
+      }, 1500);
+    }else {
+      setTimeout(() => {
+        activeCards[0].parentNode.classList.remove('flipped');
+        activeCards[1].parentNode.classList.remove('flipped');
+        activeCards[0].classList.add('hidden');
+        activeCards[1].classList.add('hidden');
+        activeCards = null;
+        openCards = 0;
+      }, 1500);
+    }
 
-      if (openCards === 2) {
-        attemptsEl.innerText = `Attempts: ${++attempts}`; //Update attempts counter
-        let activeCards = document.querySelectorAll('.card span:not(.hidden)');
-        if (activeCards[0].dataset.id === activeCards[1].dataset.id) {
-          setTimeout(() => {
-            activeCards.forEach(c => {
-              c.parentNode.remove();
-              c.style.opacity = 0;
-            });
-          }, 1000);
-        }
+    //Check if there are no cards left on the board
+    setTimeout(() => {
+      let count = document.querySelectorAll('.card');
+      console.log(count);
+      if (count.length === 0) {
+        displayEnd();
       }
-    });
-  });
+    }, 1750);
+  }
+}
+
+
+function displayEnd(){
+  let popup = document.querySelector('.popup');
+  let overlay = document.querySelector('.overlay');
+  popup.style.display = 'block';
+  overlay.style.display = 'block';
+
 }

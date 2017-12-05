@@ -6,7 +6,7 @@ let time = 0;
 const timeEl = document.querySelector('.timer');
 const timeM = document.querySelector('.timer .minutes');
 const timeS = document.querySelector('.timer .seconds');
-const resetEl = document.querySelector('.reset');
+const resetElements = document.querySelectorAll('.reset');
 setInterval(updateTime, 1000);
 
 const container = document.querySelector('.container');
@@ -17,8 +17,14 @@ let openCards = 0;
 
 createCards();
 
-setCardEventListener();
+cards.forEach(card => {
+  card.addEventListener('click', (ev) => {
+    checkCards(ev, card);
+  });
+});
 
-resetEl.addEventListener('click', () => {
-  reset();
+resetElements.forEach(resetEl => {
+  resetEl.addEventListener('click', () => {
+    reset();
+  });
 });
