@@ -52,6 +52,10 @@ body{height: 100vh;}
   flex-flow: column nowrap;
   align-items: center;
   justify-content: center;
+  text-align: center;
+}
+.popup a{
+  color: white;
 }
 .overlay{
   z-index: 50;
