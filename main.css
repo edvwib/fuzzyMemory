@@ -2,8 +2,8 @@
   --controls-background: #438957;
   --board-background: #196d31;
 
-  --card-height: 2.5em;
-  --card-width: 1.5em;
+  --card-height: 3em;
+  --card-width: 2em;
 }
 body{height: 100vh;}
 .container{
@@ -29,22 +29,48 @@ body{height: 100vh;}
 .board{
   position: relative;
 
-  /*display: flex;
-  flex-flow: row wrap;
-  justify-content: space-around;
-  align-items: center;*/
+  display: flex;
+  justify-content: center;
 
   width: 100%;
   height: 100%;
   background-color: var(--board-background);
 }
+.popup{
+  z-index: 100;
+  display: none;
+  background-color: darkred;
+  color: white;
+  border: 5px solid white;
+  border-radius: 5px;
+  height: 20vh;
+  width: 25vw;
+  font-family: 'Roboto', Arial, sans-serif;
+
+  align-self: center;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+}
+.overlay{
+  z-index: 50;
+  display: none;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  opacity: .75;
+}
+
+
 .card{
   position: absolute;
   height: var(--card-height);
   width: var(--card-width);
   z-index: 0;
   transform: rotateY(180deg);
-  
+
 
   display: flex;
   align-items: center;
@@ -65,7 +91,7 @@ body{height: 100vh;}
   height: 100%;
   width: 70%;
   background-size: contain;
-  background-position: center; 
+  background-position: center;
 }
 .card span.hidden{
   opacity: 1;
