@@ -78,24 +78,31 @@ function createCards(){
  * @return {[int]}
  */
 function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+  return Math.floor(Math.random() * (max - min)) + min;
 }
 
 function checkCards(ev, card){
   openCards++;
   card.classList.toggle('flipped');
   card.querySelector('span').classList.toggle('hidden');
+  // activeCards = document.querySelectorAll('.card span:not(.hidden)');
+  activeCards.push(card.firstChild);
+  if(activeCards.length === 0){
+    console.log('sd');
+    openCards = 1;
+  }
+
+
   if (openCards === 1) {
     card.style.zIndex = '10';
   }
   if (openCards === 2) {
     attemptsEl.innerText = `Attempts: ${++attempts}`; //Update attempts counter
-    let activeCards = document.querySelectorAll('.card span:not(.hidden)');
     if (activeCards[0].dataset.id === activeCards[1].dataset.id) {
       setTimeout(() => {
         activeCards[0].parentNode.remove();
         activeCards[1].parentNode.remove();
-        activeCards = null;
+        activeCards = [];
         openCards = 0;
       }, 1500);
     }else {
@@ -104,15 +111,13 @@ function checkCards(ev, card){
         activeCards[1].parentNode.classList.remove('flipped');
         activeCards[0].classList.add('hidden');
         activeCards[1].classList.add('hidden');
-        activeCards = null;
+        activeCards = [];
         openCards = 0;
       }, 1500);
     }
-
     //Check if there are no cards left on the board
     setTimeout(() => {
       let count = document.querySelectorAll('.card');
-      console.log(count);
       if (count.length === 0) {
         displayEnd();
       }
