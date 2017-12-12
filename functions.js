@@ -85,6 +85,9 @@ function getRandomInt(min, max) {
 }
 
 function checkCards(ev, card){
+  if (timeout) {
+    return;
+  }
   openCards++;
   card.classList.toggle('flipped');
   card.querySelector('span').classList.toggle('hidden');
@@ -96,26 +99,30 @@ function checkCards(ev, card){
   }
 
 
+
   if (openCards === 1) {
     card.style.zIndex = '10';
   }
   if (openCards === 2) {
     attemptsEl.innerText = `Attempts: ${++attempts}`; //Update attempts counter
-    if (activeCards[0].dataset.uid === activeCards[1].dataset.uid) {
+    if (activeCards[0].dataset.uid === activeCards[1].dataset.uid) { //Do nothing if the clicked card is already flipped
       attemptsEl.innerText = `Attempts: ${--attempts}`;
       card.classList.add('flipped');
       card.firstChild.classList.remove('hidden');
       activeCards = [];
       activeCards.push(card.firstChild);
       openCards = 1;
-    }else if (activeCards[0].dataset.id === activeCards[1].dataset.id) {
+    }else if (activeCards[0].dataset.id === activeCards[1].dataset.id) { //If same cards
+      timeout = true;
       setTimeout(() => {
         activeCards[0].parentNode.remove();
         activeCards[1].parentNode.remove();
         activeCards = [];
         openCards = 0;
+        timeout = false;
       }, 1500);
     }else {
+      timeout = true;
       setTimeout(() => {
         activeCards[0].parentNode.classList.remove('flipped');
         activeCards[1].parentNode.classList.remove('flipped');
@@ -123,6 +130,7 @@ function checkCards(ev, card){
         activeCards[1].classList.add('hidden');
         activeCards = [];
         openCards = 0;
+        timeout = false;
       }, 1500);
     }
     //Check if there are no cards left on the board

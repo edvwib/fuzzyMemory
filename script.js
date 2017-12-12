@@ -15,6 +15,7 @@ let cards = []; //Used for keeping track of cards
 let activeCards = [];
 let cardsImage = [0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7];
 let openCards = 0;
+let timeout = false;
 
 //End of game popup elements
 let popup, popupText, overlay;
