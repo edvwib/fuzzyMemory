@@ -56,7 +56,7 @@ function createCards(){
     let card = document.createElement("div");
     card.classList.add('class', 'card');
 
-    card.innerHTML = `<span class="hidden" data-id="${cardsImage[i]}"></span>`;
+    card.innerHTML = `<span class="hidden" data-id="${cardsImage[i]}" data-uid="${i}"></span>`;
     card.childNodes[0].style.backgroundImage = `url('./img/${cardsImage[i]}.png')`;
 
     board.appendChild(card);
@@ -98,7 +98,14 @@ function checkCards(ev, card){
   }
   if (openCards === 2) {
     attemptsEl.innerText = `Attempts: ${++attempts}`; //Update attempts counter
-    if (activeCards[0].dataset.id === activeCards[1].dataset.id) {
+    if (activeCards[0].dataset.uid === activeCards[1].dataset.uid) {
+      attemptsEl.innerText = `Attempts: ${--attempts}`;
+      card.classList.add('flipped');
+      card.firstChild.classList.remove('hidden');
+      activeCards = [];
+      activeCards.push(card.firstChild);
+      openCards = 1;
+    }else if (activeCards[0].dataset.id === activeCards[1].dataset.id) {
       setTimeout(() => {
         activeCards[0].parentNode.remove();
         activeCards[1].parentNode.remove();
