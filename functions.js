@@ -18,6 +18,7 @@ function reset(){
   });
   time = -1; // Reset the time, -1 so it dispalys 00:00
   attempts = 0;
+  attemptsEl.textContent = `Attempts: ${attempts}`; //Update attempts counter
 }
 
 /**
@@ -91,22 +92,15 @@ function checkCards(ev, card){
   openCards++;
   card.classList.toggle('flipped');
   card.querySelector('span').classList.toggle('hidden');
-  // activeCards = document.querySelectorAll('.card span:not(.hidden)');
   activeCards.push(card.firstChild);
-  if(activeCards.length === 0){
-    console.log('sd');
-    openCards = 1;
-  }
-
-
 
   if (openCards === 1) {
     card.style.zIndex = '10';
   }
   if (openCards === 2) {
-    attemptsEl.innerText = `Attempts: ${++attempts}`; //Update attempts counter
+    attemptsEl.textContent = `Attempts: ${++attempts}`; //Update attempts counter
     if (activeCards[0].dataset.uid === activeCards[1].dataset.uid) { //Do nothing if the clicked card is already flipped
-      attemptsEl.innerText = `Attempts: ${--attempts}`;
+      attemptsEl.textContent = `Attempts: ${--attempts}`;
       card.classList.add('flipped');
       card.firstChild.classList.remove('hidden');
       activeCards = [];
@@ -145,13 +139,10 @@ function checkCards(ev, card){
 
 
 function displayEnd(){
-  popup = document.querySelector('.popup');
-  popupText = popup.querySelector('p');
-  overlay = document.querySelector('.overlay');
   if (timeM.textContent === '00') {
-    popupText.textContent = `You won!<br>And it only took you ${timeS.textContent} seconds, with a total of ${attempts} attempts!`;
+    popupText.textContent = `You won! And it only took you ${timeS.textContent} seconds, with a total of ${attempts} attempts!`;
   }else {
-    popupText.textContent = `You won!<br>And it only took you ${timeM.textContent} minutes and ${timeS.textContent} seconds, with a total of ${attempts} attempts!`;
+    popupText.textContent = `You won! And it only took you ${timeM.textContent} minutes and ${timeS.textContent} seconds, with a total of ${attempts} attempts!`;
   }
 
   popup.style.visibility = 'visible';

@@ -18,7 +18,10 @@ let openCards = 0;
 let timeout = false;
 
 //End of game popup elements
-let popup, popupText, overlay;
+// let popup, popupText, overlay;
+let popup = document.querySelector('.popup');
+let popupText = popup.querySelector('p');
+let overlay = document.querySelector('.overlay');
 
 createCards();
 
