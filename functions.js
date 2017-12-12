@@ -35,14 +35,14 @@ function updateTime() {
   }
 
   if(m.toString().length < 2){// Add padding to display if int is 1 number
-    timeM.innerHTML = `0${m}`;
+    timeM.textContent = `0${m}`;
   }else{
-    timeM.innerHTML = m;
+    timeM.textContent = m;
   }
   if(s.toString().length < 2){// Add padding to display if int is 1 number
-    timeS.innerHTML = `0${s}`;
+    timeS.textContent = `0${s}`;
   }else{
-    timeS.innerHTML = s;
+    timeS.textContent = s;
   }
 }
 
@@ -55,8 +55,11 @@ function createCards(){
   for(let i = 0; i < cardsImage.length; i++) {
     let card = document.createElement("div");
     card.classList.add('class', 'card');
-
-    card.innerHTML = `<span class="hidden" data-id="${cardsImage[i]}" data-uid="${i}"></span>`;
+    let span = document.createElement('span');
+    span.classList.add('hidden');
+    span.setAttribute('data-id', cardsImage[i]);
+    span.setAttribute('data-uid', i);
+    card.appendChild(span);
     card.childNodes[0].style.backgroundImage = `url('./img/${cardsImage[i]}.png')`;
 
     board.appendChild(card);
@@ -138,9 +141,9 @@ function displayEnd(){
   popupText = popup.querySelector('p');
   overlay = document.querySelector('.overlay');
   if (timeM.textContent === '00') {
-    popupText.innerHTML = `You won!<br>And it only took you ${timeS.textContent} seconds, with a total of ${attempts} attempts!`;
+    popupText.textContent = `You won!<br>And it only took you ${timeS.textContent} seconds, with a total of ${attempts} attempts!`;
   }else {
-    popupText.innerHTML = `You won!<br>And it only took you ${timeM.textContent} minutes and ${timeS.textContent} seconds, with a total of ${attempts} attempts!`;
+    popupText.textContent = `You won!<br>And it only took you ${timeM.textContent} minutes and ${timeS.textContent} seconds, with a total of ${attempts} attempts!`;
   }
 
   popup.style.visibility = 'visible';
