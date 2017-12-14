@@ -119,7 +119,7 @@ function checkCards(ev, card){
         activeCards.forEach((activeCard) =>{
           activeCard.parentNode.classList.remove('flipped');
           activeCard.classList.add('hidden');
-          activeCard.parentNode.style.zIndex = '10';
+          activeCard.parentNode.style.zIndex = '0';
         });
         activeCards = [];
         openCards = 0;
