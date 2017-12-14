@@ -92,11 +92,9 @@ function checkCards(ev, card){
   openCards++;
   card.classList.toggle('flipped');
   card.querySelector('span').classList.toggle('hidden');
+  card.style.zIndex = '10';
   activeCards.push(card.firstChild);
 
-  if (openCards === 1) {
-    card.style.zIndex = '10';
-  }
   if (openCards === 2) {
     attemptsEl.textContent = `Attempts: ${++attempts}`; //Update attempts counter
     if (activeCards[0].dataset.uid === activeCards[1].dataset.uid) { //Do nothing if the clicked card is already flipped
@@ -118,10 +116,11 @@ function checkCards(ev, card){
     }else {
       timeout = true;
       setTimeout(() => {
-        activeCards[0].parentNode.classList.remove('flipped');
-        activeCards[1].parentNode.classList.remove('flipped');
-        activeCards[0].classList.add('hidden');
-        activeCards[1].classList.add('hidden');
+        activeCards.forEach((activeCard) =>{
+          activeCard.parentNode.classList.remove('flipped');
+          activeCard.classList.add('hidden');
+          activeCard.parentNode.style.zIndex = '10';
+        });
         activeCards = [];
         openCards = 0;
         timeout = false;
