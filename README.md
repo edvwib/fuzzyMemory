@@ -6,4 +6,5 @@ A memory game written in HTML, CSS and JavaScript
 Clone or download the repository and open index.html in your browser(tested in Chrome and Firefox). 
 
 ## Testers
-Johan, Christoffer
+Johan <br/>
+Christoffer
